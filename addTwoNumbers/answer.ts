@@ -16,19 +16,22 @@ function formListNode(num: number): ListNode | null {
   }, null);
 }
 
-function addTwoNumbers(l1: ListNode | null, l2: ListNode | null): ListNode | null {
-  function addValues(l1: ListNode | null, l2: ListNode | null, extra: number): ListNode | null {
-    if (!l1 && !l2 && extra < 1) {
-      return null;
-    }
-    const firstNode = l1?.val || 0;
-    const secondNode = l2?.val || 0;
-    const result = firstNode + secondNode + extra;
-    const newExtra = Math.floor(result / 10);
-    return new ListNode(result % 10, addValues(l1 ? l1.next : null, l2 ? l2.next : null, newExtra));
+function addTwoNumbers(
+  l1: ListNode | null,
+  l2: ListNode | null,
+  extra: number = 0,
+): ListNode | null {
+  if (!l1 && !l2 && extra < 1) {
+    return null;
   }
-
-  return addValues(l1, l2, 0);
+  const firstNode = l1?.val || 0;
+  const secondNode = l2?.val || 0;
+  const result = firstNode + secondNode + extra;
+  const newExtra = Math.floor(result / 10);
+  return new ListNode(
+    result % 10,
+    addTwoNumbers(l1 ? l1.next : null, l2 ? l2.next : null, newExtra),
+  );
 }
 
 const number1 = 9999999;
